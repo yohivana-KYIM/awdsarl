@@ -103,14 +103,14 @@ export function devisConfirmationEmail({ name, service, projectType, budget, dea
           </div>
 
           <p style="color: #555; line-height: 1.6;">
-            Si vous avez des questions entre-temps, n'hesitez pas a nous contacter au
-            <strong>+237 656 84 96 90</strong> ou par email a <strong>support@awdpay.com</strong>.
+            Si vous avez des questions entre-temps, n'hesitez pas a nous appeler au
+            <strong>+225 07 67 00 64 33</strong> ou par email a <strong>support@awdsarl.com</strong>.
           </p>
           <p style="color: #555; line-height: 1.6;">Cordialement,<br><strong>L'equipe AWD SARL</strong></p>
 
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #888; font-size: 12px;">
             <p>AWD SARL - AKWA, RUE EQUINOXE, Douala, Cameroun</p>
-            <p>support@awdpay.com | +237 656 84 96 90</p>
+            <p>support@awdsarl.com | +225 07 67 00 64 33</p>
           </div>
         </div>
       </div>

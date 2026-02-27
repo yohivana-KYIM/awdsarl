@@ -5,6 +5,7 @@ import { contactEmailToTeam, contactConfirmationEmail } from '../templates/conta
 const router = Router();
 
 router.post('/contact', async (req, res) => {
+  // Ensure JSON response even on unexpected errors
   try {
     const { name, email, company, country, service, message } = req.body;
 
@@ -16,8 +17,27 @@ router.post('/contact', async (req, res) => {
       });
     }
 
+    // Map service values (handle "service1", "service2", etc.)
+    const serviceMap = {
+      'service1': 'Développement Web',
+      'service2': 'Développement Mobile',
+      'service3': 'Solutions E-commerce',
+      'service4': 'Maintenance & Support',
+      'service5': 'Consulting IT',
+      'service6': 'Autre'
+    };
+    const serviceName = serviceMap[service] || service || 'Non spécifié';
+
     // Email to AWD SARL team
-    const teamEmail = contactEmailToTeam({ name, email, company, country, service, message });
+    const teamEmail = contactEmailToTeam({ 
+      name, 
+      email, 
+      company, 
+      country, 
+      service: serviceName, 
+      message 
+    });
+    
     const mailOptions = {
       from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
       to: process.env.SMTP_FROM_EMAIL,
@@ -47,17 +67,19 @@ router.post('/contact', async (req, res) => {
       console.error('Failed to send confirmation email:', confirmError.message);
     }
 
-    res.json({
+    return res.status(200).json({
       success: true,
       message: 'Message envoye avec succes ! Nous vous repondrons dans les plus brefs delais.',
       messageId: info.messageId
     });
 
   } catch (error) {
-    console.error('Error sending contact email:', error.message);
-    res.status(500).json({
+    console.error('Error sending contact email:', error);
+    // Always return JSON, even on unexpected errors
+    return res.status(500).json({
       success: false,
-      message: 'Erreur lors de l\'envoi du message. Veuillez reessayer.'
+      message: 'Erreur lors de l\'envoi du message. Veuillez reessayer.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
